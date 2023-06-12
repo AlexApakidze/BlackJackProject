@@ -1,5 +1,6 @@
 package com.skilldistillery.blackjack.app;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import com.skilldistillery.blackjack.entities.Dealer;
 import com.skilldistillery.blackjack.entities.Player;
@@ -17,18 +18,16 @@ public class BJApp {
 	public void run() {
 		dealer.welcomePlayer();
 		dealer.shuffle();
-		dealer.dealStartingHands(player);
+		dealer.dealStartingHand(player);
 		playBlackJack();
 	}
 
 	public void playBlackJack() {
-		// Initial dealing
 		int choice = 0;
 		boolean playerCanKeepHitting = true;
-		boolean checkIfOver;
-		checkIfOver = player.getHandValue() < 21 && dealer.getHandValue() < 21;
+		boolean gameOn = true;
 
-		while (checkIfOver) {
+		while (gameOn) {
 
 			while (playerCanKeepHitting) {
 
@@ -52,6 +51,10 @@ public class BJApp {
 					playerCanKeepHitting = false;
 					break;
 				}
+				if (dealer.getHandValue() == player.getHandValue()) {
+					showHands();
+					System.out.println("Its a draw!");
+				}
 
 				System.out.println(dealer.getStartingHand());
 				System.out.println("Your Hand: " + player.getHand());
@@ -61,20 +64,28 @@ public class BJApp {
 					sc.nextLine();
 				}
 				choice = sc.nextInt();
+				
 				while (choice > 2 || choice < 1) {
 					System.out.println("Please pick 1 or 2.");
-					choice = sc.nextInt();
+					try {
+						choice = sc.nextInt();
+					} catch (InputMismatchException e) {
+						playerCanKeepHitting = false;
+						break;
+					}
 				}
-
 				sc.nextLine();
 
 				switch (choice) {
 
 				case 1:
 					System.out.println(dealer.dealCardToPlayer(player) + " added to hand.\n");
-					
 					continue;
+					
 				case 2:
+					if (dealer.getHandValue() < 17) {
+						System.out.println("Dealer: " + dealer.getHand());
+					}
 					while (dealer.getHandValue() < 17) {
 						System.out.println("Dealer draws a " + dealer.dealCardToPlayer(dealer));
 
@@ -83,8 +94,9 @@ public class BJApp {
 						playerCanKeepHitting = false;
 						break;
 					}
+					
 				default:
-					System.out.println("That does not look like a 1 or 2 to me.");
+					System.out.println("That does not look like a 1 or 2 to me.\nYou lose!");
 					continue;
 				}
 
@@ -124,7 +136,7 @@ public class BJApp {
 					dealer = new Dealer();
 					player = new Player();
 					dealer.shuffle();
-					dealer.dealStartingHands(player);
+					dealer.dealStartingHand(player);
 					playerCanKeepHitting = true;
 					playerDecidesToPlayAgain = false;
 					break;
@@ -133,7 +145,7 @@ public class BJApp {
 					System.out.println("Thank you for playing!");
 					playerCanKeepHitting = true;
 					playerDecidesToPlayAgain = false;
-					checkIfOver = false;
+					gameOn = false;
 					break;
 				default:
 					System.out.println("That does not look like a 1 or 2 to me.");

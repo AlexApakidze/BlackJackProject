@@ -11,7 +11,7 @@ public class Dealing {
 		Scanner sc = new Scanner(System.in);
 		Deck deck = new Deck();
 		int userChoice;
-		int value = 0;
+	 	int value = 0;
 		Card dealtCard;
 		int dealtCardValue = 0;
 

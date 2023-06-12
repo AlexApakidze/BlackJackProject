@@ -12,7 +12,7 @@ public class Deck extends Card {
 
 		Suit[] suits = Suit.values();
 		Rank[] ranks = Rank.values();
-
+ 
 		for (Suit suit : suits) {
 			for (Rank rank : ranks) {
 				Card card = new Card(suit, rank);

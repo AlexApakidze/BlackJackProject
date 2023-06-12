@@ -22,10 +22,10 @@ public class Dealer extends Player {
 
 	public String getStartingHand() {
 		Card faceUpCard = hand.getHand().get(1);
-		return "Dealer Hand: " + "[??]" + faceUpCard;
+		return "Dealer Hand: " + "[??] " + faceUpCard;
 	}
 
-	public void dealStartingHands(Player player) {
+	public void dealStartingHand(Player player) {
 		System.out.println("Dealer deals " + dealCardToPlayer(player) + " to you");
 		dealCardToPlayer(this);
 		System.out.println("Dealer places a card face down");

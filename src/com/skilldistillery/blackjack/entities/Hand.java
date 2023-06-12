@@ -34,4 +34,6 @@ public abstract class Hand {
 	public void clearHand() {
 		playerHand = null;
 	}
+
+
 }

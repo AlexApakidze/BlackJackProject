@@ -17,7 +17,7 @@ public class Player {
 	}
 
 	public boolean hasBlackJack() {
-		return hand.getHandValue() == 21;
+		return hand.getHandValue() == 21 && hand.getHand().size() == 2;
 	}
-	
+
 }

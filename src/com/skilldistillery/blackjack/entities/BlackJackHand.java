@@ -8,11 +8,21 @@ public class BlackJackHand extends Hand {
 	@Override
 	public int getHandValue() {
 		int handValue = 0;
+		int aceCount = 0;
+		
 		for (Card card : playerHand) {
 
 			handValue = handValue + card.getValue();
+			
+			if (card.getRank() == Rank.ACE) {
+				aceCount++;
+			}
 		}
-
+		if ((this.hasAnAce() && handValue > 21)) {
+			for (int i = 0; i < aceCount; i++) {
+				handValue = handValue - 10;
+			}
+		}
 		return handValue;
 	}
 
@@ -29,10 +39,11 @@ public class BlackJackHand extends Hand {
 		}
 		return false;
 	}
+
 	
-	public boolean isHighAce() {
+	public boolean hasAnAce() {
 		for (Card card : playerHand) {
-			if(card.getRank() == Rank.ACE) {
+			if (card.getRank() == Rank.ACE) {
 				return true;
 			}
 		}
